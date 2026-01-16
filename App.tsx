@@ -26,18 +26,21 @@ const App: React.FC = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    // Adjust canvas height for a more compact "Spirit Slip"
+    canvas.height = 720; 
+
     // Clear and Set Background
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = '#f4f1ea';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     
-    // Faint Ink Texture for that "Spirit Slip" feel
+    // Faint Ink Texture
     ctx.fillStyle = 'rgba(0,0,0,0.03)';
-    for (let i = 0; i < 3000; i++) {
+    for (let i = 0; i < 2000; i++) {
         ctx.fillRect(Math.random() * canvas.width, Math.random() * canvas.height, 1, 1);
     }
 
-    // Border - Refined double line
+    // Border
     ctx.strokeStyle = 'rgba(26, 26, 26, 0.15)';
     ctx.lineWidth = 1;
     ctx.strokeRect(30, 30, canvas.width - 60, canvas.height - 60);
@@ -45,88 +48,91 @@ const App: React.FC = () => {
     ctx.strokeRect(45, 45, canvas.width - 90, canvas.height - 90);
 
     // Subtle background calligraphy
-    ctx.globalAlpha = 0.03;
+    ctx.globalAlpha = 0.04;
     ctx.fillStyle = '#1a1a1a';
-    ctx.font = '240px "Ma Shan Zheng"';
+    ctx.font = '280px "Ma Shan Zheng"';
     ctx.textAlign = 'center';
-    ctx.fillText('玄天', canvas.width / 2, canvas.height / 2 + 100);
+    ctx.fillText('吉', canvas.width / 2, canvas.height / 2 + 80);
     ctx.globalAlpha = 1.0;
 
     // Title
     ctx.fillStyle = '#1a1a1a';
-    ctx.font = 'bold 100px "Ma Shan Zheng"';
+    ctx.font = 'bold 90px "Ma Shan Zheng"';
     ctx.textAlign = 'center';
-    ctx.fillText('天 选 胜 数', canvas.width / 2, 190);
+    ctx.fillText('天 选 胜 数', canvas.width / 2, 170);
 
     // Subtitle
-    ctx.font = '26px "Noto Serif SC"';
+    ctx.font = '22px "Noto Serif SC"';
     ctx.fillStyle = '#666';
-    ctx.fillText('玄 天 演 卦 · 命 格 定 数', canvas.width / 2, 260);
+    ctx.fillText('玄 天 演 卦 · 命 格 定 数', canvas.width / 2, 230);
 
     // Divider
     ctx.strokeStyle = 'rgba(0,0,0,0.1)';
     ctx.beginPath();
-    ctx.moveTo(200, 300);
-    ctx.lineTo(canvas.width - 200, 300);
+    ctx.moveTo(250, 270);
+    ctx.lineTo(canvas.width - 250, 270);
     ctx.stroke();
 
     // Front Numbers Section
-    ctx.font = 'bold 36px "Ma Shan Zheng"';
+    ctx.font = 'bold 32px "Ma Shan Zheng"';
     ctx.fillStyle = '#b91c1c';
-    ctx.fillText('【 天 罡 · 阳 数 】', canvas.width / 2, 380);
+    ctx.fillText('【 天 罡 · 阳 数 】', canvas.width / 2, 340);
     
-    const ballRadius = 50;
-    const spacing = 120;
+    const ballRadius = 45;
+    const spacing = 110;
     const startXFront = (canvas.width - (result.front.length * spacing - (spacing - ballRadius * 2))) / 2 + ballRadius;
     result.front.forEach((num, i) => {
         const x = startXFront + (i * spacing);
-        const y = 480;
+        const y = 430;
         ctx.beginPath();
         ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
         ctx.strokeStyle = '#b91c1c';
         ctx.lineWidth = 3;
         ctx.stroke();
         ctx.fillStyle = '#b91c1c';
-        ctx.font = 'bold 50px "Ma Shan Zheng"';
-        ctx.fillText(num.toString().padStart(2, '0'), x, y + 18);
+        ctx.font = 'bold 46px "Ma Shan Zheng"';
+        ctx.fillText(num.toString().padStart(2, '0'), x, y + 16);
     });
 
     // Back Numbers Section
-    ctx.font = 'bold 36px "Ma Shan Zheng"';
+    ctx.font = 'bold 32px "Ma Shan Zheng"';
     ctx.fillStyle = '#1a1a1a';
-    ctx.fillText('【 地 煞 · 阴 数 】', canvas.width / 2, 630);
+    ctx.fillText('【 地 煞 · 阴 数 】', canvas.width / 2, 560);
 
     const startXBack = (canvas.width - (result.back.length * spacing - (spacing - ballRadius * 2))) / 2 + ballRadius;
     result.back.forEach((num, i) => {
         const x = startXBack + (i * spacing);
-        const y = 730;
+        const y = 650;
         ctx.beginPath();
         ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
         ctx.strokeStyle = '#1a1a1a';
         ctx.lineWidth = 3;
         ctx.stroke();
         ctx.fillStyle = '#1a1a1a';
-        ctx.font = 'bold 50px "Ma Shan Zheng"';
-        ctx.fillText(num.toString().padStart(2, '0'), x, y + 18);
+        ctx.font = 'bold 46px "Ma Shan Zheng"';
+        ctx.fillText(num.toString().padStart(2, '0'), x, y + 16);
     });
 
-    // Hexagram Result (Simplified as the "Seal of the Result")
+    // Corner Seal (Hexagram Name)
     ctx.fillStyle = '#b91c1c';
-    ctx.font = 'bold 64px "Ma Shan Zheng"';
-    ctx.fillText(`卦 名 ： ${result.hexagram.name}`, canvas.width / 2, 860);
-
-    // Footer Stamp / Legal
-    ctx.font = '22px "Noto Serif SC"';
-    ctx.fillStyle = 'rgba(0,0,0,0.3)';
-    ctx.fillText('道法自然 · 灵感天机 · 仅供参考', canvas.width / 2, canvas.height - 50);
-    
-    // Corner Seal
-    ctx.fillStyle = '#b91c1c';
-    ctx.fillRect(canvas.width - 130, 60, 70, 70);
+    ctx.fillRect(60, 60, 90, 90);
     ctx.fillStyle = '#fff';
-    ctx.font = 'bold 24px "Ma Shan Zheng"';
-    ctx.fillText('玄天', canvas.width - 95, 95);
-    ctx.fillText('数测', canvas.width - 95, 120);
+    ctx.font = 'bold 28px "Ma Shan Zheng"';
+    ctx.textAlign = 'center';
+    // Stack hexagram name if it's long, or just vertical
+    const hexName = result.hexagram.name.slice(0, 4);
+    if (hexName.length >= 2) {
+      ctx.fillText(hexName.slice(0, 2), 105, 105);
+      ctx.fillText(hexName.slice(2, 4), 105, 135);
+    } else {
+      ctx.fillText(hexName, 105, 115);
+    }
+
+    // Footer Stamp
+    ctx.font = '18px "Noto Serif SC"';
+    ctx.fillStyle = 'rgba(0,0,0,0.3)';
+    ctx.textAlign = 'center';
+    ctx.fillText('— 道法自然 · 灵感天机 —', canvas.width / 2, canvas.height - 60);
 
     setShareImage(canvas.toDataURL('image/png'));
   };
@@ -146,7 +152,7 @@ const App: React.FC = () => {
     } catch (err) {
       console.error(err);
       setLoading(false);
-      alert(err instanceof Error ? err.message : '天机难测，缘分未至');
+      alert(err instanceof Error ? err.message : '星象晦暗，缘分未至');
     }
   };
 
@@ -256,14 +262,14 @@ const App: React.FC = () => {
           {showResult && result && (
             <div className="w-full max-w-4xl reveal-scroll px-2 md:px-0">
               <div className="divine-card p-0.5 md:p-1 relative border-black/5 overflow-hidden">
-                <div className="bg-white/40 border-[1px] border-black/5 p-4 md:p-16 relative">
+                <div className="bg-white/40 border-[1px] border-black/5 p-4 md:p-12 relative">
                   
                   <div className="absolute top-2 left-2 text-3xl md:text-7xl text-black opacity-5 chinese-font">演</div>
                   <div className="absolute bottom-2 right-2 text-3xl md:text-7xl text-black opacity-5 chinese-font">卦</div>
 
                   <div className="mb-8 md:mb-16 text-center border-b border-black/10 pb-4 md:pb-10">
                      <span className="text-[10px] font-bold text-gray-400 tracking-[0.5em] uppercase block mb-2 md:mb-6">Revelation of Destiny</span>
-                     <h2 className="text-4xl md:text-8xl font-black chinese-font text-[#1a1a1a]">天 选 胜 数</h2>
+                     <h2 className="text-4xl md:text-7xl font-black chinese-font text-[#1a1a1a]">天 选 胜 数</h2>
                   </div>
 
                   <div className="space-y-10 md:space-y-20">
