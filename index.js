@@ -74,7 +74,7 @@ Error generating stack: `+u.message+`
     "meaning": "卦象的简要含义",
     "description": "卦象的详细解语"
   },
-  "analysis": "详实占卜感悟，文言文或庄重玄妙风格，不少于100字",
+  "analysis": "详实占卜感悟，文言文或庄重玄妙风格，给出胜数前区和后区的原因",
   "luckLevel": 0-100
 }
 
